@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"testing"
+
 	_ "github.com/lib/pq"
 )
 
@@ -13,14 +14,14 @@ const (
 	dbSource = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
 )
 
-var TestQueries = Queries
+var TestQueries *Queries
 
-func TestMain(m = testing.M){
+func TestMain(m *testing.M) {
 	conn, err := sql.Open(dbDriver, dbSource)
 	if err != nil {
-		log.Fatal("can not connect to db:",err)
+		log.Fatal("can not connect to db:", err)
 	}
-	
+
 	TestQueries = New(conn)
 
 	os.Exit(m.Run())
